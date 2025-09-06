@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Manage Patient- Hospital Management Application</title>
+    <style>
+        body {
+          background-color: #f4f8fb;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .navbar {
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+          text-align: center;
+          padding: 15px;
+          background-color: #0d6efd;
+          color: white;
+          margin-top: auto;
+        }
+
+        .page-header {
+          margin-top: 100px;
+          margin-bottom: 40px;
+          text-align: center;
+        }
+
+        .page-header h2 {
+          font-weight: 700;
+          color: #0d6efd;
+        }
+
+        .card-custom {
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          background: #fff;
+          padding: 20px;
+        }
+
+        .table {
+          border-radius: 12px;
+          overflow: hidden;
+        }
+
+        .table thead {
+          background: linear-gradient(90deg, #0d6efd, #4a9dff);
+          color: white;
+        }
+
+        .btn-sm {
+          border-radius: 20px;
+          padding: 5px 14px;
+          font-size: 0.85rem;
+        }
+
+        .form-control {
+          border-radius: 10px;
+          box-shadow: none;
+        }
+
+        .btn-primary {
+          border-radius: 30px;
+          font-weight: 600;
+          padding: 10px 20px;
+        }
+
+        .no-data {
+          text-align: center;
+          padding: 20px;
+          color: #777;
+          font-style: italic;
+        }
+    </style>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-primary" href="/">Hospital Management Application</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/adminPage">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="/doctorPage">Doctor</a></li>
+                <li class="nav-item"><a class="nav-link" href="/receptionistPage">Receptionist</a></li>
+                <li class="nav-item"><a class="nav-link" href="/patientPage">Patient</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 pt-4">
+    <div class="page-header">
+        <h2><i class="bi bi-person-badge-fill"></i>Patient DesBoard</h2>
+        <p class="text-muted">You can book and check your appointment in the hospital</p>
+    </div>
+
+    <div class="card-custom mb-5">
+        <h4 class="mb-3 text-primary"><i class="bi bi-list-check"></i>All Appointments</h4>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Problem</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                    <th>Request</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="s : ${appointments}">
+                    <td th:text="${s.patientName}"></td>
+                    <td th:text="${s.patientContact}"></td>
+                    <td th:text="${s.patientProblem}"></td>
+                    <td th:text="${s.patientAddress}"></td>
+                    <td>
+                        <a th:href="@{/removeAppointment/{id}(id=${s.id})}" class="btn btn-sm btn-danger"
+                           onclick="return confirm('Are you sure you want to delete this Appointment?');">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                    <td>
+                        <span th:if="${s.patientAppointment}" class="badge bg-success">Accepted</span>
+                        <span th:if="${!s.patientAppointment}" class="badge bg-warning text-dark">Pending</span>
+                    </td>
+                </tr>
+                <tr th:if="${appointments.size()} == 0">
+                    <td colspan="6" class="no-data text-center">No Available Appointment</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="card-custom p-4">
+                <h4 class="text-center text-primary mb-4"><i class="bi bi-person-plus-fill"></i> Book Your Appointment</h4>
+                <form th:action="@{/bookAppointment}" method="post">
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" name="patientName" class="form-control" placeholder="👩‍⚕️ Patient Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="number" name="patientContact" class="form-control" placeholder="📞 Contact Number">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" name="patientProblem" class="form-control" placeholder="🩺 Patient Problem" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" name="patientAddress" class="form-control" placeholder="🏠 Address">
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit">✅ Book Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    &copy; 2025 Hospital Management Application | Made with ❤️ using Spring Boot
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

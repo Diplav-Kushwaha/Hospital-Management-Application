@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Hospital Management Application</title>
+    <style>
+        body {
+          background: #f4f8fb; /* simple soft light color */
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+        }
+
+        .navbar {
+          background: linear-gradient(90deg, #0d6efd, #4a9dff);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .navbar .nav-link {
+          color: white !important;
+          font-weight: 500;
+        }
+        .navbar .nav-link:hover {
+          color: #ffd700 !important;
+        }
+
+        .hero {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 0 20px;
+          background-color: #f4f8fb;
+        }
+
+        .hero-content {
+          max-width: 750px;
+          padding: 40px;
+          background: white;
+          border-radius: 20px;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+          color: #333;
+        }
+
+        .hero h1 {
+          font-size: 3rem;
+          font-weight: bold;
+          margin-bottom: 20px;
+          color: #0d6efd;
+        }
+
+        .hero h6 {
+          font-size: 1.2rem;
+          margin-bottom: 35px;
+          line-height: 1.6;
+          color: #555;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .role-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            border-radius: 40px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+
+        .role-btn span {
+            font-size: 1.2rem;
+        }
+
+        .role-btn.admin {
+            background: linear-gradient(45deg, #0d6efd, #4a9dff);
+            color: white;
+        }
+        .role-btn.admin:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(13, 110, 253, 0.4);
+        }
+
+        .role-btn.doctor {
+            background: #fff;
+            border: 2px solid #28a745;
+            color: #28a745;
+        }
+        .role-btn.doctor:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .role-btn.nurse {
+            background: #fff;
+            border: 2px solid #ff6f61;
+            color: #ff6f61;
+        }
+        .role-btn.nurse:hover {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .role-btn.patient {
+            background: #fff;
+            border: 2px solid #ffc107;
+            color: #ffc107;
+        }
+        .role-btn.patient:hover {
+            background: #ffc107;
+            color: white;
+        }
+
+        .role-btn.receptionist {
+            background: #fff;
+            border: 2px solid #6f42c1;
+            color: #6f42c1;
+        }
+        .role-btn.receptionist:hover {
+            background: #6f42c1;
+            color: white;
+        }
+        footer {
+          text-align: center;
+          padding: 18px;
+          background: linear-gradient(90deg, #0d6efd, #4a9dff);
+          color: white;
+          font-size: 0.95rem;
+          margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="/">Hospital Management Application</a>
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/adminPage">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="/doctorPage">Doctor</a></li>
+                <li class="nav-item"><a class="nav-link" href="/receptionistPage">Receptionist</a></li>
+                <li class="nav-item"><a class="nav-link" href="/patientPage">Patient</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Hospital Management Application</h1>
+        <h6>Manage patients, staff, and hospital operations efficiently.</h6>
+        <div class="button-group">
+            <a href="adminPage" class="role-btn admin">
+                <span>👨‍💼</span> Admin
+            </a>
+            <a href="doctorPage" class="role-btn doctor">
+                <span>🩺</span> Doctor
+            </a>
+            <a href="patientPage" class="role-btn patient">
+                <span>🧑‍🤝‍🧑</span> Patient
+            </a>
+            <a href="receptionistPage" class="role-btn receptionist">
+                <span>📋</span> Receptionist
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<footer>
+    &copy; 2025 Hospital Management Application | Built with ❤️ using Spring Boot + Thymeleaf
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
